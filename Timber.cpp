@@ -1,5 +1,3 @@
-// Timber.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
 #include <sstream>
@@ -32,6 +30,18 @@ int     main()
     Sprite spriteTree;
     spriteTree.setTexture(textureTree);
     spriteTree.setPosition(810, 0);
+
+    Sprite spriteBGtree1;
+    Sprite spriteBGtree2;
+    Sprite spriteBGtree3;
+	spriteBGtree1.setTexture(textureTree);
+	spriteBGtree2.setTexture(textureTree);
+	spriteBGtree3.setTexture(textureTree);
+    spriteBGtree1.setPosition(20, -40);
+    spriteBGtree2.scale(0.5, 1);
+    spriteBGtree3.scale(0.4, 1);
+    spriteBGtree2.setPosition(1800, -50);
+    spriteBGtree3.setPosition(1600, -70);
 
     Texture textureBee;
     textureBee.loadFromFile("graphics/bee.png");
@@ -348,6 +358,9 @@ int     main()
 
         window.clear();
         window.draw(spriteBackground);
+		window.draw(spriteBGtree1);
+		window.draw(spriteBGtree2);
+		window.draw(spriteBGtree3);
         window.draw(spriteCloud1);
         window.draw(spriteCloud2);
         window.draw(spriteCloud3);
@@ -392,13 +405,3 @@ void    updateBranches(int seed)
     }
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

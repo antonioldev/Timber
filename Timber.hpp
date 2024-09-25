@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <sstream>
 #include "SFML/Graphics.hpp"
 #include "SFML/Audio.hpp"
@@ -62,25 +63,28 @@ typedef struct s_text
 	sf::Text score;
 } t_text;
 
-//typedef struct s_sprite
-//{
-//	Sprite spriteBackground;
-//	Sprite spriteTree;
-//	Sprite spriteBGtree1;
-//	Sprite spriteBGtree2;
-//	Sprite spriteBGtree3;
-//	Sprite spritePlayer;
-//	Sprite spriteGravestone;
-//	Sprite spriteAxe;
-//	Sprite spriteLog;
-//	t_bg_obj bee;
-//	t_bg_obj clouds[NUM_CLOUDS];
-//} t_sprite;
+typedef struct s_sprite
+{
+	sf::Sprite background;
+	sf::Sprite tree;
+	sf::Sprite BGtree1;
+	sf::Sprite BGtree2;
+	sf::Sprite BGtree3;
+	sf::Sprite player;
+	sf::Sprite gravestone;
+	sf::Sprite axe;
+	sf::Sprite log;
+	t_bg_obj bee;
+	t_bg_obj clouds[NUM_CLOUDS];
+} t_sprite;
 
 
 void    updateBranches(int seed);
 void	loadSounds(t_sound& sound);
 void	loadTextures(t_texture& texture);
-void	loadSprites(sf::Sprite& sprite, sf::Texture& texture, int posX, int posY, float scaleX, float scaleY);
+void	loadSingleSprite(sf::Sprite& sprite, sf::Texture& texture, int posX, int posY, float scaleX, float scaleY);
+void	loadSprites(t_sprite& sprite, t_texture& texture);
 void	set_timeBar(t_timebar& timeBar);
-void	set_text(t_text& text);
+void	set_font(t_text& text);
+void	set_text(t_text& text, const std::string& str);
+void	draw_sprite(sf::RenderWindow& window, t_sprite& sprite, t_timebar& timeBar,t_text& text, bool paused);

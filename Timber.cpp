@@ -17,40 +17,10 @@ int     main()
 	t_texture texture;
     loadTextures(texture);
 
+    t_sprite sprite;
+    loadSprites(sprite, texture);
 
-    Sprite spriteBackground;
-    Sprite spriteTree;
-    Sprite spriteBGtree1;
-    Sprite spriteBGtree2;
-    Sprite spriteBGtree3;
-    Sprite spritePlayer;
-    Sprite spriteGravestone;
-    Sprite spriteAxe;
-    Sprite spriteLog;
-    t_bg_obj bee;
-    t_bg_obj clouds[NUM_CLOUDS];
-
-	loadSprites(spriteBackground, texture.background, 0, 0, 1, 1);  
-	loadSprites(spriteTree, texture.tree, 810, 0, 1, 1);
-	loadSprites(spriteBGtree1, texture.tree, 20, -40, 1, 1);
-	loadSprites(spriteBGtree2, texture.tree, 1800, -50, 0.5, 1);
-	loadSprites(spriteBGtree3, texture.tree, 1600, -70, 0.4, 1);
-	loadSprites(bee.sprite, texture.bee, -100, 800, 1, 1);
-    for (int i = 0; i < NUM_CLOUDS; i++)
-        loadSprites(clouds[i].sprite, texture.cloud, -1000, 0 * 250, 1, 1);
-
-    for (int i = 0; i < NUM_BRANCHES; i++)
-    {
-		loadSprites(branches[i], texture.branch, -2000, -2000, 1, 1);
-        branches[i].setOrigin(220, 20);
-    }
-	loadSprites(spritePlayer, texture.player, 580, 720, 1, 1);
     side playerSide = side::LEFT;
-	loadSprites(spriteGravestone, texture.gravestone, 675, 2000, 1, 1);
-	loadSprites(spriteAxe, texture.axe, 700, 830, 1, 1);
-	loadSprites(spriteLog, texture.log, 810, 720, 1, 1);
-
-
     bool logActive = false;
     float logSpeedX = 1000;
     float logSpeedY = -1500;
@@ -58,28 +28,18 @@ int     main()
     bool paused = true;
     int score = 0;
 
-
-
     Clock clock;
-
 
 	t_timebar timeBar;
     set_timeBar(timeBar);
-
 
 	Time gameTimeTotal;
 	float timeRemaining = 6.0f;
 	float timeBarWidthPerSecond = timeBar.startWidth / timeRemaining;
 
 	t_text text;
-	set_text(text);
-    FloatRect textRect = text.message.getLocalBounds();
-    text.message.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-    text.message.setPosition(WIDTH / 2.0f, HEIGHT / 2.0f);
-    text.score.setPosition(20, 20);
-
-
-    
+	set_font(text);
+	set_text(text, "Press Enter to start!");    
 
     while (window.isOpen())
     {
@@ -92,8 +52,8 @@ int     main()
 			timeRemaining = 6;
 			for (int i = 1; i < NUM_BRANCHES; i++)
 				branchPositions[i] = side::NONE;
-			spriteGravestone.setPosition(675, 2000);
-			spritePlayer.setPosition(580, 720);
+			sprite.gravestone.setPosition(675, 2000);
+			sprite.player.setPosition(580, 720);
 			acceptInput = true;
         }
         if (acceptInput)
@@ -106,10 +66,10 @@ int     main()
                 timeRemaining += (2.0 / score) + 0.15;
 				if (timeRemaining > 6.0f)
 					timeRemaining = 6.0f;
-                spriteAxe.setPosition((float)AXE_POSITION_RIGHT, spriteAxe.getPosition().y);
-                spritePlayer.setPosition(1200, 720);
+                sprite.axe.setPosition((float)AXE_POSITION_RIGHT, sprite.axe.getPosition().y);
+                sprite.player.setPosition(1200, 720);
                 updateBranches(score);
-                spriteLog.setPosition(810, 720);
+                sprite.log.setPosition(810, 720);
                 logSpeedX = -5000;
                 logActive = true;
                 acceptInput = false;
@@ -122,10 +82,10 @@ int     main()
                 timeRemaining += (2.0 / score) + 0.15;
                 if (timeRemaining > 6.0f)
                     timeRemaining = 6.0f;
-                spriteAxe.setPosition((float)AXE_POSITION_LEFT, spriteAxe.getPosition().y);
-                spritePlayer.setPosition(580, 720);
+                sprite.axe.setPosition((float)AXE_POSITION_LEFT, sprite.axe.getPosition().y);
+                sprite.player.setPosition(580, 720);
                 updateBranches(score);
-                spriteLog.setPosition(810, 720);
+                sprite.log.setPosition(810, 720);
                 logSpeedX = 5000;
                 logActive = true;
                 acceptInput = false;
@@ -138,7 +98,7 @@ int     main()
             if (event.type == Event::KeyReleased && !paused)
             {
 				acceptInput = true;
-				spriteAxe.setPosition(2000, spriteAxe.getPosition().y);
+				sprite.axe.setPosition(2000, sprite.axe.getPosition().y);
             }
         }
 
@@ -151,43 +111,40 @@ int     main()
             {
                 sound.oot.play();
                 paused = true;
-                text.message.setString("GAME OVER!!");
-                FloatRect textRect = text.message.getLocalBounds();
-                text.message.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-                text.message.setPosition(WIDTH / 2.0f, HEIGHT / 2.0f);
+                set_text(text, "GAME OVER!!");
             }
-            if (!bee.active)
+            if (!sprite.bee.active)
             {
                 srand((int)time(0));
-                bee.speed = (rand() % 200) + 200;
+                sprite.bee.speed = (rand() % 200) + 200;
                 srand((int)time(0) * 10);
                 float height = (rand() % 500) + 500;
-                bee.sprite.setPosition(2000, height);
-                bee.active = true;
+                sprite.bee.sprite.setPosition(2000, height);
+                sprite.bee.active = true;
             }
             else
             {
                 // add movement up and down bee
-                bee.sprite.setPosition(bee.sprite.getPosition().x - (bee.speed * dt.asSeconds()), bee.sprite.getPosition().y);
-                if (bee.sprite.getPosition().x < -100)
-                    bee.active = false;
+                sprite.bee.sprite.setPosition(sprite.bee.sprite.getPosition().x - (sprite.bee.speed * dt.asSeconds()), sprite.bee.sprite.getPosition().y);
+                if (sprite.bee.sprite.getPosition().x < -100)
+                    sprite.bee.active = false;
             }
             for (int i = 0; i < NUM_CLOUDS; i++)
             {
-                if (!clouds[i].active)
+                if (!sprite.clouds[i].active)
                 {
                     srand((int)time(0) * 10 * i);
-                    clouds[i].speed = (rand() % 200);
+                    sprite.clouds[i].speed = (rand() % 200);
                     srand((int)time(0) * 10 * i);
                     float height = (rand() % 150);
-                    clouds[i].sprite.setPosition(-300, height);
-                    clouds[i].active = true;
+                    sprite.clouds[i].sprite.setPosition(-300, height);
+                    sprite.clouds[i].active = true;
                 }
                 else
                 {
-                    clouds[i].sprite.setPosition(clouds[i].sprite.getPosition().x + (clouds[i].speed * dt.asSeconds()), clouds[i].sprite.getPosition().y);
-                    if (clouds[i].sprite.getPosition().x > WIDTH)
-                        clouds[i].active = false;
+                    sprite.clouds[i].sprite.setPosition(sprite.clouds[i].sprite.getPosition().x + (sprite.clouds[i].speed * dt.asSeconds()), sprite.clouds[i].sprite.getPosition().y);
+                    if (sprite.clouds[i].sprite.getPosition().x > WIDTH)
+                        sprite.clouds[i].active = false;
                 }
             }
 
@@ -214,12 +171,12 @@ int     main()
             }
             if (logActive)
             {
-				spriteLog.setPosition(spriteLog.getPosition().x + (logSpeedX * dt.asSeconds()),
-                        spriteLog.getPosition().y + (logSpeedY * dt.asSeconds()));
-                if (spriteLog.getPosition().x < -100 || spriteLog.getPosition().x > 2000)
+				sprite.log.setPosition(sprite.log.getPosition().x + (logSpeedX * dt.asSeconds()),
+                        sprite.log.getPosition().y + (logSpeedY * dt.asSeconds()));
+                if (sprite.log.getPosition().x < -100 || sprite.log.getPosition().x > 2000)
                 {
                     logActive = false;
-                    spriteLog.setPosition(810, 720);
+                    sprite.log.setPosition(810, 720);
                 }
             }
 
@@ -228,45 +185,20 @@ int     main()
                 sound.death.play();
                 paused = true;
                 acceptInput = false;
-                spriteGravestone.setPosition(525, 760);
-				spriteAxe.setPosition(2000, 830);
-				spriteLog.setPosition(2000, 720);
-				spritePlayer.setPosition(2000, 660);
-                text.message.setString("SQUISHED!!");
-				FloatRect textRect = text.message.getLocalBounds();
-                text.message.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-                text.message.setPosition(WIDTH / 2.0f, HEIGHT / 2.0f);
+                sprite.gravestone.setPosition(525, 760);
+				sprite.axe.setPosition(2000, 830);
+				sprite.log.setPosition(2000, 720);
+				sprite.player.setPosition(2000, 660);
+                set_text(text, "SQUISHED!!");
             }
         }
 
-
-        window.clear();
-        window.draw(spriteBackground);
-		window.draw(spriteBGtree1);
-		window.draw(spriteBGtree2);
-		window.draw(spriteBGtree3);
-		for (int i = 0; i < NUM_CLOUDS; i++)
-			window.draw(clouds[i].sprite);
-        for (int i = 0; i < NUM_BRANCHES; i++)
-            window.draw(branches[i]);
-        window.draw(spriteTree);
-        window.draw(spritePlayer);
-        window.draw(spriteAxe);
-        window.draw(spriteLog);
-        window.draw(spriteGravestone);
-        window.draw(bee.sprite);
-        window.draw(text.score);
-		window.draw(timeBar.timeBar);
-        window.draw(timeBar.outline);
-            
-			
-        if (paused)
-            window.draw(text.message);
-        window.display();
+		draw_sprite(window, sprite, timeBar,text, paused);
     }
     return 0;
 }
 
+/*Update the branches to make them fall*/
 void    updateBranches(int seed)
 {
     for (int j = NUM_BRANCHES - 1; j > 0; j--)
@@ -287,6 +219,7 @@ void    updateBranches(int seed)
     }
 }
 
+/*Load sounds used in the game*/
 void loadSounds(t_sound& sound)
 {
 	sound.chopBuffer.loadFromFile("sound/chop.wav");
@@ -297,6 +230,7 @@ void loadSounds(t_sound& sound)
 	sound.oot.setBuffer(sound.ootBuffer);
 }
 
+/*Load all the textures used in the game*/
 void	loadTextures(t_texture& texture)
 {
 	texture.background.loadFromFile("graphics/background.png");
@@ -310,13 +244,38 @@ void	loadTextures(t_texture& texture)
 	texture.log.loadFromFile("graphics/log.png");
 }
 
-void	loadSprites(sf::Sprite& sprite, sf::Texture& texture, int posX, int posY, float scaleX, float scaleY)
+/*Load all the sprites with their textures, position and scale*/ /
+void	loadSprites(t_sprite& sprite, t_texture& texture)
+{
+    loadSingleSprite(sprite.background, texture.background, 0, 0, 1, 1);
+    loadSingleSprite(sprite.tree, texture.tree, 810, 0, 1, 1);
+    loadSingleSprite(sprite.BGtree1, texture.tree, 20, -40, 1, 1);
+    loadSingleSprite(sprite.BGtree2, texture.tree, 1800, -50, 0.5, 1);
+    loadSingleSprite(sprite.BGtree3, texture.tree, 1600, -70, 0.4, 1);
+    loadSingleSprite(sprite.bee.sprite, texture.bee, -100, 800, 1, 1);
+    for (int i = 0; i < NUM_CLOUDS; i++)
+        loadSingleSprite(sprite.clouds[i].sprite, texture.cloud, -1000, 0 * 250, 1, 1);
+
+    for (int i = 0; i < NUM_BRANCHES; i++)
+    {
+        loadSingleSprite(branches[i], texture.branch, -2000, -2000, 1, 1);
+        branches[i].setOrigin(220, 20);
+    }
+    loadSingleSprite(sprite.player, texture.player, 580, 720, 1, 1);
+    loadSingleSprite(sprite.gravestone, texture.gravestone, 675, 2000, 1, 1);
+    loadSingleSprite(sprite.axe, texture.axe, 700, 830, 1, 1);
+    loadSingleSprite(sprite.log, texture.log, 810, 720, 1, 1);
+}
+
+/*Load a single sprite with a texture, position and scale*/ /
+void	loadSingleSprite(sf::Sprite& sprite, sf::Texture& texture, int posX, int posY, float scaleX, float scaleY)
 {
     sprite.setTexture(texture);
     sprite.scale(scaleX, scaleY);
     sprite.setPosition(posX, posY);
 }
 
+/*Create size of the time bar*/
 void	set_timeBar(t_timebar& timeBar)
 {
     timeBar.startWidth = 400;
@@ -333,18 +292,51 @@ void	set_timeBar(t_timebar& timeBar)
     timeBar.outline.setPosition((WIDTH / 2.0f) - timeBar.startWidth / 2, 980);
 }
 
-void	set_text(t_text& text)
+/*Set the font used for the game*/
+void	set_font(t_text& text)
 {
     text.font.loadFromFile("fonts/KOMIKAP_.ttf");
     text.message.setFont(text.font);
     text.score.setFont(text.font);
-
-    text.message.setString("Press Enter to start!");
     text.score.setString("SCORE =  0");
-
     text.message.setCharacterSize(75);
     text.score.setCharacterSize(100);
-
     text.message.setFillColor(Color::White);
     text.score.setFillColor(Color::White);
+}
+
+/*Print on the display the right text, depending on game status*/
+void	set_text(t_text& text, const std::string& str)
+{
+    text.message.setString(str);
+    FloatRect textRect = text.message.getLocalBounds();
+    text.message.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+    text.message.setPosition(WIDTH / 2.0f, HEIGHT / 2.0f);
+    text.score.setPosition(20, 20);
+}
+
+/*Clear and redraw sprites for each loop*/
+void	draw_sprite(sf::RenderWindow& window, t_sprite& sprite, t_timebar& timeBar, t_text& text, bool paused)
+{
+    window.clear();
+    window.draw(sprite.background);
+    window.draw(sprite.BGtree1);
+    window.draw(sprite.BGtree2);
+    window.draw(sprite.BGtree3);
+    for (int i = 0; i < NUM_CLOUDS; i++)
+        window.draw(sprite.clouds[i].sprite);
+    for (int i = 0; i < NUM_BRANCHES; i++)
+        window.draw(branches[i]);
+    window.draw(sprite.tree);
+    window.draw(sprite.player);
+    window.draw(sprite.axe);
+    window.draw(sprite.log);
+    window.draw(sprite.gravestone);
+    window.draw(sprite.bee.sprite);
+    window.draw(text.score);
+    window.draw(timeBar.timeBar);
+    window.draw(timeBar.outline);
+    if (paused)
+        window.draw(text.message);
+    window.display();
 }

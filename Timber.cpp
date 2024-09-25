@@ -1,8 +1,5 @@
 
-#include <iostream>
-#include <sstream>
-#include "SFML/Graphics.hpp"
-#include "SFML/Audio.hpp"
+#include "Timber.hpp"
 
 using namespace sf;
 const int WIDTH = 1920;
@@ -12,7 +9,7 @@ Sprite branches[NUM_BRANCHES];
 enum class side { LEFT, RIGHT, NONE };
 side branchPositions[NUM_BRANCHES];
 
-void    updateBranches(int seed);
+
 
 int     main()
 {
@@ -136,7 +133,8 @@ int     main()
 	textureGravestone.loadFromFile("graphics/rip.png");
 	Sprite spriteGravestone;
 	spriteGravestone.setTexture(textureGravestone);
-	spriteGravestone.setPosition(600, 860);
+    spriteGravestone.setPosition(675, 2000);
+	//spriteGravestone.setPosition(600, 860);
 
 	Texture textureAxe;
 	textureAxe.loadFromFile("graphics/axe.png");
@@ -196,6 +194,8 @@ int     main()
                 playerSide = side::RIGHT;
                 score++;
                 timeRemaining += (2.0 / score) + 0.15;
+				if (timeRemaining > 6.0f)
+					timeRemaining = 6.0f;
                 spriteAxe.setPosition(AXE_POSITION_RIGHT, spriteAxe.getPosition().y);
                 spritePlayer.setPosition(1200, 720);
                 updateBranches(score);
@@ -210,6 +210,8 @@ int     main()
                 playerSide = side::LEFT;
                 score++;
                 timeRemaining += (2.0 / score) + 0.15;
+                if (timeRemaining > 6.0f)
+                    timeRemaining = 6.0f;
                 spriteAxe.setPosition(AXE_POSITION_LEFT, spriteAxe.getPosition().y);
                 spritePlayer.setPosition(580, 720);
                 updateBranches(score);

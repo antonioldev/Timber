@@ -36,7 +36,7 @@ int     main()
 	t_text text;
 	set_font(text);
 	set_text(text, "Press Enter to start!");    
-
+    int lastDraw = 0;
     while (window.isOpen())
     {
         if (Keyboard::isKeyPressed(Keyboard::Escape))
@@ -45,6 +45,7 @@ int     main()
         {
             paused = false;
 			score = 0;
+            lastDraw = 0;
             timeRemaining = 6.0f;
 			for (int i = 1; i < NUM_BRANCHES; i++)
 				sprite.branchPositions[i] = side::NONE;
@@ -145,10 +146,22 @@ int     main()
                         sprite.clouds[i].active = false;
                 }
             }
+            
+            lastDraw++;
+            if (lastDraw == 100)
+            {
+                std::stringstream ss;
+                ss << "Score = " << score;
+                text.score.setString(ss.str());
 
-            std::stringstream ss;
-            ss << "SCORE = " << score;
-            text.score.setString(ss.str());
+                std::stringstream ss2;
+                ss2 << "FPS = ";
+                ss2 << std::fixed << std::setprecision(2);
+                float fps = 1.0f / dt.asSeconds();
+                ss2 << std::setw(7) << std::setfill(' ') << fps;
+                text.fps.setString(ss2.str());
+                lastDraw = 0;
+            }
             for (int i = 0; i < NUM_BRANCHES; i++)
             {
                 float height = i * 150;

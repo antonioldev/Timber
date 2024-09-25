@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <sstream>
 #include "SFML/Graphics.hpp"
@@ -66,6 +67,7 @@ typedef struct s_text
 	sf::Text message;
 	sf::Text score;
 	sf::Text bestScore;
+	sf::Text fps;
 } t_text;
 
 typedef struct s_sprite

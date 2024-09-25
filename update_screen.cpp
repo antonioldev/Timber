@@ -43,6 +43,7 @@ void	draw_sprite(sf::RenderWindow& window, t_sprite& sprite, t_timebar& timeBar,
     window.draw(text.bestScore);
     window.draw(timeBar.timeBar);
     window.draw(timeBar.outline);
+	window.draw(text.fps);
     if (paused)
         window.draw(text.message);
     window.display();

@@ -91,6 +91,11 @@ void	set_font(t_text& text)
     text.bestScore.setString("SCORE =  0");
     text.bestScore.setCharacterSize(100);
     text.bestScore.setFillColor(Color::White);
+
+    text.fps.setFont(text.font);
+    text.fps.setString("fps =  0");
+    text.fps.setCharacterSize(15);
+    text.fps.setFillColor(Color::White);
 }
 
 /*Print on the display the right text, depending on game status*/
@@ -102,4 +107,5 @@ void	set_text(t_text& text, const std::string& str)
     text.message.setPosition(WIDTH / 2.0f, HEIGHT / 2.0f);
     text.score.setPosition(20, 20);
 	text.bestScore.setPosition(20, 900);
+    text.fps.setPosition(1800, 1020);
 }

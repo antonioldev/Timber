@@ -22,6 +22,7 @@ int     main()
     bool acceptInput = false;
     bool paused = true;
     int score = 0;
+	int bestScore = 0;
 
     Clock clock;
 
@@ -187,6 +188,13 @@ int     main()
 				sprite.log.setPosition(2000, 720);
 				sprite.player.setPosition(2000, 660);
                 set_text(text, "SQUISHED!!");
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    std::stringstream ss;
+                    ss << "SCORE = " << score;
+                    text.bestScore.setString(ss.str());
+                }
             }
         }
 
@@ -195,49 +203,3 @@ int     main()
     return 0;
 }
 
-/*Update the branches to make them fall*/
-void    updateBranches(int seed, t_sprite& sprite)
-{
-    for (int j = NUM_BRANCHES - 1; j > 0; j--)
-        sprite.branchPositions[j] = sprite.branchPositions[j - 1];
-	srand((int)time(0) + seed);
-	int r = rand() % 5;
-    switch (r)
-    {
-	case 0:
-        sprite.branchPositions[0] = side::LEFT;
-		break;
-	case 1:
-        sprite.branchPositions[0] = side::RIGHT;
-		break;
-	default:
-        sprite.branchPositions[0] = side::NONE;
-		break;
-    }
-}
-
-/*Clear and redraw sprites for each loop*/
-void	draw_sprite(sf::RenderWindow& window, t_sprite& sprite, t_timebar& timeBar, t_text& text, bool paused)
-{
-    window.clear();
-    window.draw(sprite.background);
-    window.draw(sprite.BGtree1);
-    window.draw(sprite.BGtree2);
-    window.draw(sprite.BGtree3);
-    for (int i = 0; i < NUM_CLOUDS; i++)
-        window.draw(sprite.clouds[i].sprite);
-    for (int i = 0; i < NUM_BRANCHES; i++)
-        window.draw(sprite.branches[i]);
-    window.draw(sprite.tree);
-    window.draw(sprite.player);
-    window.draw(sprite.axe);
-    window.draw(sprite.log);
-    window.draw(sprite.gravestone);
-    window.draw(sprite.bee.sprite);
-    window.draw(text.score);
-    window.draw(timeBar.timeBar);
-    window.draw(timeBar.outline);
-    if (paused)
-        window.draw(text.message);
-    window.display();
-}

@@ -77,13 +77,20 @@ void	set_timeBar(t_timebar& timeBar)
 void	set_font(t_text& text)
 {
     text.font.loadFromFile("fonts/KOMIKAP_.ttf");
+
     text.message.setFont(text.font);
+    text.message.setCharacterSize(75);
+    text.message.setFillColor(Color::White);
+
     text.score.setFont(text.font);
     text.score.setString("SCORE =  0");
-    text.message.setCharacterSize(75);
     text.score.setCharacterSize(100);
-    text.message.setFillColor(Color::White);
     text.score.setFillColor(Color::White);
+
+    text.bestScore.setFont(text.font);
+    text.bestScore.setString("SCORE =  0");
+    text.bestScore.setCharacterSize(100);
+    text.bestScore.setFillColor(Color::White);
 }
 
 /*Print on the display the right text, depending on game status*/
@@ -94,4 +101,5 @@ void	set_text(t_text& text, const std::string& str)
     text.message.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
     text.message.setPosition(WIDTH / 2.0f, HEIGHT / 2.0f);
     text.score.setPosition(20, 20);
+	text.bestScore.setPosition(20, 900);
 }

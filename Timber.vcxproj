@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClCompile Include="preloading.cpp" />
     <ClCompile Include="Timber.cpp" />
+    <ClCompile Include="update_screen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Timber.hpp" />

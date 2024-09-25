@@ -65,6 +65,7 @@ typedef struct s_text
 	sf::Font font;
 	sf::Text message;
 	sf::Text score;
+	sf::Text bestScore;
 } t_text;
 
 typedef struct s_sprite

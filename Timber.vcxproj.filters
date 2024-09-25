@@ -21,6 +21,9 @@
     <ClCompile Include="preloading.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="update_screen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Timber.hpp">

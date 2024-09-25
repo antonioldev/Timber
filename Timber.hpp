@@ -6,6 +6,8 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Audio.hpp"
 
+using namespace sf;
+
 #define WIDTH 1920
 #define HEIGHT 1080
 #define NUM_BRANCHES 6
@@ -16,6 +18,7 @@ const float AXE_POSITION_LEFT = 700;
 const float AXE_POSITION_RIGHT = 1075;
 
 enum class side { LEFT, RIGHT, NONE };
+
 
 typedef struct s_texture
 {
@@ -46,6 +49,7 @@ typedef struct s_bg_obj
 	sf::Sprite sprite;
 	float speed = 0.0f;
 	bool active = false;
+	float offset;
 } t_bg_obj;
 
 typedef struct s_timebar
@@ -74,12 +78,14 @@ typedef struct s_sprite
 	sf::Sprite gravestone;
 	sf::Sprite axe;
 	sf::Sprite log;
+	sf::Sprite branches[NUM_BRANCHES];
+	side branchPositions[NUM_BRANCHES];
 	t_bg_obj bee;
 	t_bg_obj clouds[NUM_CLOUDS];
 } t_sprite;
 
 
-void    updateBranches(int seed);
+void    updateBranches(int seed, t_sprite& sprite);
 void	loadSounds(t_sound& sound);
 void	loadTextures(t_texture& texture);
 void	loadSingleSprite(sf::Sprite& sprite, sf::Texture& texture, int posX, int posY, float scaleX, float scaleY);

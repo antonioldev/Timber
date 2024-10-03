@@ -2,10 +2,10 @@
 In the Timber project, I developed a fast-paced game inspired by the popular mobile game Timberman. The objective is to chop down trees while avoiding branches that fall from above.
 
 **Key Points**:
-- Basics of C++ Programming**: I learned how to set up a game window using SFML, handle user input, and manage game states.
-- Game Loops**: I understood the concept of game loops, which are essential for keeping the game running smoothly by continuously updating the game state and rendering graphics.
-- Graphics Rendering**: I gained hands-on experience with simple graphics rendering, including drawing sprites and handling basic animations.
-- Collision Detection**: I implemented basic collision detection to determine when the player character gets hit by a branch.
+- **Basics of C++ Programming**: I learned how to set up a game window using SFML, handle user input, and manage game states.
+- **Game Loops**: I understood the concept of game loops, which are essential for keeping the game running smoothly by continuously updating the game state and rendering graphics.
+- **Graphics Rendering**: I gained hands-on experience with simple graphics rendering, including drawing sprites and handling basic animations.
+- **Collision Detection**: I implemented basic collision detection to determine when the player character gets hit by a branch.
 
 ## SFML Library
 Throughout these projects, I used the SFML (Simple and Fast Multimedia Library).W

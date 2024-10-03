@@ -23,7 +23,6 @@ SFML is particularly useful for game development due to its simplicity and ease 
 - **Audio**: Playing sound effects and music. SFML supports various audio formats and allows for easy playback and control of sounds.
 - **Input**: Handling keyboard, mouse, and joystick input. SFML simplifies the process of capturing and responding to user inputs.
 
-SFML has been a great starting point for learning the basics of game programming. It handles many of the lower-level tasks like rendering, input management, and audio playback, which allowed me to focus on learning game logic and design. Through each project, I explored new features of SFML and honed my C++ skills.
 
 ## Game Scenes
 ![Timber Screenshot](https://github.com/antonioldev/Timber/blob/master/Screenshot1.png)

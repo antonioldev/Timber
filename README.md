@@ -1,11 +1,16 @@
 ## Timber
-In the Timber project, I developed a fast-paced game inspired by the popular mobile game Timberman. The objective is to chop down trees while avoiding branches that fall from above.
 
-**Key Points**:
-- **Basics of C++ Programming**: I learned how to set up a game window using SFML, handle user input, and manage game states.
-- **Game Loops**: I understood the concept of game loops, which are essential for keeping the game running smoothly by continuously updating the game state and rendering graphics.
-- **Graphics Rendering**: I gained hands-on experience with simple graphics rendering, including drawing sprites and handling basic animations.
-- **Collision Detection**: I implemented basic collision detection to determine when the player character gets hit by a branch.
+This was my first step into game development using C++ and the SFML (Simple and Fast Multimedia Library) library. SFML made things like rendering graphics and handling input much easier, especially as I was just starting out. Timber is a simple game where the player chops down trees while avoiding branches. While working on this project, I learned how to create a game loop, which is essential for continuously updating the game state and rendering graphics.
+
+Key takeaways from the Timber project:
+
+**Basic SFML Integration**: I learned how to set up SFML in a C++ project and use it to create windows, handle input, and render shapes and sprites.
+**Game Loop**: I implemented a fundamental game loop that manages the game's timing, logic, and rendering.
+**Event Handling**: I explored how to handle keyboard input, which is key for interacting with a game.
+**Sprites and Textures**: This project introduced me to the concepts of using textures and sprites to represent game objects visually.
+At this point, I was starting to understand how SFML makes game development more accessible, even when building something as simple as Timber. It opened my eyes to the power of libraries in abstracting complex multimedia operations.
+
+
 
 ## SFML Library
 Throughout these projects, I used the SFML (Simple and Fast Multimedia Library).W
@@ -17,6 +22,8 @@ SFML is particularly useful for game development due to its simplicity and ease 
 - **Windowing**: Creating and managing game windows. SFML provides a straightforward way to create windows and handle events such as resizing and closing.
 - **Audio**: Playing sound effects and music. SFML supports various audio formats and allows for easy playback and control of sounds.
 - **Input**: Handling keyboard, mouse, and joystick input. SFML simplifies the process of capturing and responding to user inputs.
+
+SFML has been a great starting point for learning the basics of game programming. It handles many of the lower-level tasks like rendering, input management, and audio playback, which allowed me to focus on learning game logic and design. Through each project, I explored new features of SFML and honed my C++ skills.
 
 ## Game Scenes
 ![Timber Screenshot](https://github.com/antonioldev/Timber/blob/master/Screenshot1.png)
